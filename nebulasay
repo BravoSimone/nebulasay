@@ -1,8 +1,6 @@
 #!/usr/bin/env bundle exec ruby
 
 require 'optparse'
-require 'catpix'
-require 'asciiart'
 require_relative 'printer'
 
 options = {}
@@ -17,16 +15,13 @@ OptionParser.new do |parser|
   end
 
   parser.on("-p", "--pixel", "Print image with colorful pixels.") do | |
-    option  s[:mode] = "colorful"
+    options[:mode] = "colorful"
+  end
+
+  parser.on("-h", "--help", "Display this help.") do | |
+    print parser
+    options[:help] = true
   end
 end.parse!
 
-print Printer.baloon(options[:message])
-
-if options[:mode] == "ascii"
-  print AsciiArt.new(Dir["./images/*"].sample).to_ascii_art(width: 60)
-else
-  Catpix::print_image Dir["./images/*"].sample, limit_x: 0.7,
-                                                limit_y: 0.7,
-                                                resolution: "high"
-end
+print Printer.new(options)
