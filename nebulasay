@@ -24,4 +24,4 @@ OptionParser.new do |parser|
   end
 end.parse!
 
-print Printer.new(options)
+Printer.new(options)
